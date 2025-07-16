@@ -1,6 +1,5 @@
 import type { Task } from "./task";
 
-// src/types/schedule.ts
 export interface ClientInfo {
   ProfilePicture: string;
   ID: string;
@@ -95,7 +94,6 @@ export interface DetailedSchedule {
   ServiceNote: string | null;
 }
 
-// Helper function to convert API response format to our internal format
 export const mapDetailedScheduleToSchedule = (
   detailedSchedule: DetailedSchedule
 ): Schedule => {

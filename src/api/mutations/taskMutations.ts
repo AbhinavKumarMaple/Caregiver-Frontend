@@ -1,5 +1,3 @@
-// src/api/mutations/taskMutations.ts
-
 interface CreateTaskData {
   title: string;
   description: string;
@@ -32,7 +30,6 @@ interface DeleteTaskResponse {
 }
 
 export const createTask = (data: CreateTaskData): Promise<TaskResponse> => {
-  // Placeholder for creating task data
   return Promise.resolve({
     id: Math.random().toString(36).substr(2, 9),
     title: data.title,
@@ -49,7 +46,6 @@ export const updateTask = (
   id: string,
   data: UpdateTaskData
 ): Promise<TaskResponse> => {
-  // Placeholder for updating task data
   return Promise.resolve({
     id,
     title: data.title || "Updated Task",
@@ -63,6 +59,5 @@ export const updateTask = (
 };
 
 export const deleteTask = (id: string): Promise<DeleteTaskResponse> => {
-  // Placeholder for deleting task data
   return Promise.resolve({ id, success: true });
 };

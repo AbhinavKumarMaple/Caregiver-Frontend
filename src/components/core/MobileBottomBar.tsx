@@ -25,7 +25,6 @@ export default function MobileBottomBar() {
         const userId = parsedUserData.ID || parsedUserData.id;
         return userId ? `/profile/${userId}` : "/profile";
       } catch (error) {
-        // Log error only in development
         if (
           typeof process !== "undefined" &&
           process.env.NODE_ENV === "development"
@@ -41,7 +40,6 @@ export default function MobileBottomBar() {
   return (
     <div className="fixed h-[84px] w-full sm:hidden bottom-0 left-0 right-0 bg-[#F5FBFF] border-t border-gray-200 flex items-center safe-area-pb">
       <div className="flex w-full  justify-around items-center max-w-md mx-auto">
-        {/* Home Tab */}
         <Link
           to="/"
           className="flex flex-col items-center py-2 px-4 rounded-lg transition-colors"
@@ -68,7 +66,6 @@ export default function MobileBottomBar() {
           </span>
         </Link>
 
-        {/* Profile Tab */}
         <Link
           to={profileUrl}
           className="flex flex-col items-center py-2 px-4 rounded-lg transition-colors"

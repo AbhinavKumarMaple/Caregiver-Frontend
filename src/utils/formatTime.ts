@@ -1,7 +1,6 @@
-// src/utils/formatTime.ts
-import dayjs from '../lib/dayjs';
+import dayjs from "../lib/dayjs";
 
-export const formatTime = (date: string | Date, format = 'LLL') => {
+export const formatTime = (date: string | Date, format = "LLL") => {
   return dayjs(date).format(format);
 };
 

@@ -1,4 +1,3 @@
-// src/types/user.ts
 export interface Location {
   HouseNumber: string;
   Street: string;

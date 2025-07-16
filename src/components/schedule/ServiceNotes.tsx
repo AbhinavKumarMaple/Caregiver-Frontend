@@ -1,4 +1,3 @@
-// src/components/schedule/ServiceNotes.tsx
 import React from "react";
 
 interface ServiceNotesProps {

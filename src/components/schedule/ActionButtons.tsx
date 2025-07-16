@@ -1,4 +1,3 @@
-// src/components/schedule/ActionButtons.tsx
 import React from "react";
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 
@@ -17,16 +16,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   onCancelCheckin,
   isLoading: propIsLoading = false,
 }) => {
-  // Get loading states from React Query
   const isFetching = useIsFetching();
   const isMutating = useIsMutating();
 
-  // Combine prop loading state with React Query loading states
   const isLoading = propIsLoading || isFetching > 0 || isMutating > 0;
 
-  if (visitStatus === "completed" || visitStatus === "missed") {
-    return null; // No actions for completed or missed visits
-  }
+  if (visitStatus === "completed" || visitStatus === "missed") return null;
 
   return (
     <div className="mt-8">

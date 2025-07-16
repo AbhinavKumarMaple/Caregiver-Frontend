@@ -1,5 +1,4 @@
-// src/hooks/useGeoLocation.ts
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface GeoLocationState {
   latitude: number | null;
@@ -16,7 +15,10 @@ const useGeoLocation = () => {
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setLocation((prev) => ({ ...prev, error: 'Geolocation is not supported by your browser' }));
+      setLocation((prev) => ({
+        ...prev,
+        error: "Geolocation is not supported by your browser",
+      }));
       return;
     }
 
@@ -32,7 +34,10 @@ const useGeoLocation = () => {
       setLocation((prev) => ({ ...prev, error: error.message }));
     };
 
-    const watchId = navigator.geolocation.watchPosition(handleSuccess, handleError);
+    const watchId = navigator.geolocation.watchPosition(
+      handleSuccess,
+      handleError
+    );
 
     return () => {
       navigator.geolocation.clearWatch(watchId);

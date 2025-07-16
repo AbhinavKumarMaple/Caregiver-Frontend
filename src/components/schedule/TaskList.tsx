@@ -1,4 +1,3 @@
-// src/components/schedule/TaskList.tsx
 import React, { useState, useEffect } from "react";
 
 interface Task {
@@ -31,7 +30,6 @@ const TaskList: React.FC<TaskListProps> = ({
     Record<string, "yes" | "no">
   >({});
 
-  // Initialize task reasons and selected options from tasks
   useEffect(() => {
     const initialReasons: Record<string, string> = {};
     const initialOptions: Record<string, "yes" | "no"> = {};
@@ -56,19 +54,15 @@ const TaskList: React.FC<TaskListProps> = ({
   const handleTaskToggle = (taskId: string, status: "yes" | "no") => {
     if (!isInteractive || !onTaskUpdate) return;
 
-    // Update the selected option
     setSelectedOptions((prev) => ({
       ...prev,
       [taskId]: status,
     }));
 
     if (status === "no") {
-      // Show reason input when "No" is selected
       setShowReasonInput(taskId);
     } else {
-      // Hide reason input when "Yes" is selected
       setShowReasonInput(null);
-      // Send update for "yes" option
       onTaskUpdate(taskId, "completed");
     }
   };
@@ -83,15 +77,12 @@ const TaskList: React.FC<TaskListProps> = ({
   const handleReasonBlur = (taskId: string) => {
     if (!isInteractive || !onTaskUpdate || !taskReasons[taskId]) return;
 
-    // Send update with reason when input loses focus
     onTaskUpdate(taskId, "not_completed", taskReasons[taskId]);
   };
 
   return (
     <div className="mt-[24px]">
-      <h3 className="font-roboto font-semibold text-[20px] mb-4">
-        Tasks:
-      </h3>
+      <h3 className="font-roboto font-semibold text-[20px] mb-4">Tasks:</h3>
       {tasks.length === 0 ? (
         <p className="font-roboto text-description text-gray-500">
           No tasks assigned for this schedule.
@@ -250,11 +241,6 @@ const TaskList: React.FC<TaskListProps> = ({
           ))}
         </div>
       )}
-      {/* {isInteractive && tasks.every((task) => task.status === "completed") && (
-        <div className="bg-green-50 text-green-800 p-2 rounded-md font-roboto font-normal text-description">
-          All tasks completed!
-        </div>
-      )} */}
     </div>
   );
 };

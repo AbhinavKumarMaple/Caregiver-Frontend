@@ -15,17 +15,13 @@ import {
   formatTimeRange,
   formatLocation,
 } from "../utils/scheduleUtils";
-import { useCurrSchedule } from "../context/currSchedule";
-import { alarm, clock_white, location, location_white } from "../assets";
+import { alarm, clock_white, location_white } from "../assets";
 import { formatAddress } from "../utils/formatadd";
 import Button from "../components/common/Button";
 import DurationTimer from "../components/common/DurationTimer";
 
 const Dashboard: React.FC = () => {
-  const [activeSchedule, setActiveSchedule] = useState<Schedule | null>(
-    null
-  );
-  const { currScheduleId } = useCurrSchedule();
+  const [activeSchedule, setActiveSchedule] = useState<Schedule | null>(null);
   const {
     data: schedules,
     isLoading,
@@ -54,7 +50,7 @@ const Dashboard: React.FC = () => {
   }, [userData]);
 
   useEffect(() => {
-    const schedule = schedules?.find((s) => s.VisitStatus === 'in_progress');
+    const schedule = schedules?.find((s) => s.VisitStatus === "in_progress");
     if (schedule) {
       setActiveSchedule(schedule);
     }
@@ -101,12 +97,11 @@ const Dashboard: React.FC = () => {
   }, [schedules]);
 
   useEffect(() => {
-    const schedule = schedules?.find((s) => s.VisitStatus === 'in_progress');
+    const schedule = schedules?.find((s) => s.VisitStatus === "in_progress");
     if (schedule) {
       setActiveSchedule(schedule);
     }
   }, [schedules]);
-
 
   if (isLoading || isUserLoading) {
     return <DashboardSkeleton />;
@@ -118,85 +113,82 @@ const Dashboard: React.FC = () => {
     return <div>An error occurred: {errorMessage}</div>;
   }
 
- 
   return (
     <>
       <Title>
-        <span >Dashboard</span>
+        <span>Dashboard</span>
       </Title>
       <MobileHeader>
         <span className="text-lg font-semibold capitalize">
           Welcome {userData?.UserName + "!"}
         </span>
       </MobileHeader>
-      {/* timer section  */}
-      {
-        activeSchedule && (
-          <section className="flex flex-col item-center  rounded-[20px] p-5 bg-tertiary my-2">
-        <div>
-          {
-            activeSchedule?.CheckinTime &&
-          <DurationTimer checkinTime={activeSchedule?.CheckinTime}
-          className="text-[#EEEEEE] mb-1 text-center text-xl sm:text-[28px] font-semibold"
-          />
-          }
-        </div>
-        <div className="flex items-center gap-[8px] ">
-          <img
-            src={
-              activeSchedule?.profilePicture || "invalid.jpg"
-            }
-            alt="Profile"
-            className=" w-10 sm:w-14 h-10 sm:h-14 rounded-full mb-2 object-cover"
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = "https://picsum.photos/200/300";
-            }}
-          />
-          <h3 className="text-base sm:text-xl text-white font-semibold font-roboto">
-            {activeSchedule?.ClientInfo?.UserName}
-          </h3>
-        </div>
-
-        {/* //flex  */}
-        <section className="flex flex-col md:items-center md:gap-3 md:flex-row">
-        
-        <div className="flex items-center w-fit min-w-fit  text-nowrap text-sm text-gray-500">
-          <img
-            src={location_white}
-            alt="location"
-            className="w-5 sm:w-6 h-5 sm:h-6 rounded-full mr-1"
-          />
-          <span className="font-roboto text-[#EEEEEE]">{formatAddress(activeSchedule?.ClientInfo?.Location)}</span>
-        </div>
-        <span className="h-3 w-0.5 hidden md:block bg-[#EEEEEE] rounded-xl" />
-        <div className="flex items-center w-full md:mt-0 mt-2">
-          <img src={clock_white} alt="clock" className="w-5 h-5 mr-2" />
-          <span className="font-roboto text-sm  text-[#EEEEEE]">
-            {activeSchedule && formatTimeRange(
-              activeSchedule?.ScheduledSlot?.From,
-              activeSchedule?.ScheduledSlot.To
+      {activeSchedule && (
+        <section className="flex flex-col item-center  rounded-[20px] p-5 bg-tertiary my-2">
+          <div>
+            {activeSchedule?.CheckinTime && (
+              <DurationTimer
+                checkinTime={activeSchedule?.CheckinTime}
+                className="text-[#EEEEEE] mb-1 text-center text-xl sm:text-[28px] font-semibold"
+              />
             )}
-          </span>
-        </div>
-        </section>
+          </div>
+          <div className="flex items-center gap-[8px] ">
+            <img
+              src={activeSchedule?.profilePicture || "invalid.jpg"}
+              alt="Profile"
+              className=" w-10 sm:w-14 h-10 sm:h-14 rounded-full mb-2 object-cover"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = "https://picsum.photos/200/300";
+              }}
+            />
+            <h3 className="text-base sm:text-xl text-white font-semibold font-roboto">
+              {activeSchedule?.ClientInfo?.UserName}
+            </h3>
+          </div>
 
-      
-        <Button variant="white" className="mt-4">
-          <div className="text-sm sm:text-base flex items-center justify-center text-center">
-            <img src={alarm} alt="alarm" className="h-5 w-5" />
-            Clock-Out</div>
-        </Button>
-      </section>
-        )
-      }
+          {/* //flex  */}
+          <section className="flex flex-col md:items-center md:gap-3 md:flex-row">
+            <div className="flex items-center w-fit min-w-fit  text-nowrap text-sm text-gray-500">
+              <img
+                src={location_white}
+                alt="location"
+                className="w-5 sm:w-6 h-5 sm:h-6 rounded-full mr-1"
+              />
+              <span className="font-roboto text-[#EEEEEE]">
+                {formatAddress(activeSchedule?.ClientInfo?.Location)}
+              </span>
+            </div>
+            <span className="h-3 w-0.5 hidden md:block bg-[#EEEEEE] rounded-xl" />
+            <div className="flex items-center w-full md:mt-0 mt-2">
+              <img src={clock_white} alt="clock" className="w-5 h-5 mr-2" />
+              <span className="font-roboto text-sm  text-[#EEEEEE]">
+                {activeSchedule &&
+                  formatTimeRange(
+                    activeSchedule?.ScheduledSlot?.From,
+                    activeSchedule?.ScheduledSlot.To
+                  )}
+              </span>
+            </div>
+          </section>
+
+          <Button variant="white" className="mt-4">
+            <div className="text-sm sm:text-base flex items-center justify-center text-center">
+              <img src={alarm} alt="alarm" className="h-5 w-5" />
+              Clock-Out
+            </div>
+          </Button>
+        </section>
+      )}
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-7 sm:mt-2">
         {dashboardStats.map((stat, index) => (
           <div
             key={index}
-            className={`p-4 rounded-2xl shadow-sm bg-white text-center ${index === 0 ? "col-span-2 md:col-span-1" : "col-span-1"
-              }`}
+            className={`p-4 rounded-2xl shadow-sm bg-white text-center ${
+              index === 0 ? "col-span-2 md:col-span-1" : "col-span-1"
+            }`}
           >
             <div className={`text-[34px] font-bold ${stat.colorClass}`}>
               {stat.value}

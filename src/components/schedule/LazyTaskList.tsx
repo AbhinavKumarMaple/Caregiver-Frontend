@@ -1,8 +1,6 @@
-// src/components/schedule/LazyTaskList.tsx
 import React, { Suspense, lazy } from "react";
 import TaskListSkeleton from "./TaskListSkeleton";
 
-// Lazy load the TaskList component
 const TaskList = lazy(() => import("./TaskList"));
 
 interface LazyTaskListProps {

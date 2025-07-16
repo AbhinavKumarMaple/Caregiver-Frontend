@@ -1,4 +1,3 @@
-// src/components/common/AppLoader.tsx
 import React from "react";
 import LoadingSpinner from "./LoadingSpinner";
 

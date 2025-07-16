@@ -1,4 +1,3 @@
-// src/components/schedule/ScheduleCard.tsx
 import React from "react";
 import {
   more_horizontal,
@@ -98,17 +97,14 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
     ? `${clientInfo.FirstName} ${clientInfo.LastName}`
     : patientName;
 
-  // We'll use a ref to track if the component is mounted
   const isMounted = React.useRef(true);
 
-  // Cleanup function to prevent state updates after unmount
   React.useEffect(() => {
     return () => {
       isMounted.current = false;
     };
   }, []);
 
-  // Determine the appropriate classes based on variant
   const cardClasses =
     variant === "card"
       ? "p-5 rounded-2xl shadow-sm bg-white"
@@ -116,7 +112,6 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
       ? "rounded-2xl bg-[#2DA6FF0A]"
       : "rounded-2xl bg-white";
 
-  // Render the component based on whether it should be a link or not
   if (asLink) {
     return (
       <Link to={`/schedule/${id}`} className={`${cardClasses} ${className}`}>
@@ -125,74 +120,60 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
     );
   } else {
     return (
-      <div className={`${cardClasses} ${className}`}>
-        {renderCardContent()}
-      </div>
+      <div className={`${cardClasses} ${className}`}>{renderCardContent()}</div>
     );
   }
 
-  // Helper function to render the card content
   function renderCardContent() {
-
-    console.log('whats is status',status)
-    // Centered variant content
+    console.log("whats is status", status);
     if (variant === "centered") {
       return (
-       <>
-       
-        <div className={`flex flex-col items-center text-center py-2 px-2`}>
-          {/* Service Name */}
-        
-          <h2 className="font-roboto text-[24px] font-semibold text-tertiary leading-activity text-activity-bg mb-2">
-            {serviceName}
-          </h2>
+        <>
+          <div className={`flex flex-col items-center text-center py-2 px-2`}>
+            <h2 className="font-roboto text-[24px] font-semibold text-tertiary leading-activity text-activity-bg mb-2">
+              {serviceName}
+            </h2>
 
-          {/* Profile Picture and Name */}
-          <div className="flex items-center  gap-[8px]">
-            <img
-              src={
-                profilePicture || clientInfo?.ProfilePicture || "invalid.jpg"
-              }
-              alt="Profile"
-              className="w-14 h-14 rounded-full mb-2 object-cover"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = "https://picsum.photos/200/300";
-              }}
-            />
-            <h3 className="text-base sm:text-xl font-semibold font-roboto">
-              {fullName}
-            </h3>
-          </div>
-
-          {/* Date and Time Section */}
-          {
-            status !== 'in_progress' &&
-            <div className="flex items-center mt-2 justify-between w-full bg-secondary rounded-xl text-gray-700 py-3 px-4">
-            <div className="flex items-center justify-end w-full md:text-sm text-[12px]">
-              <img src={calendar} alt="calendar" className="w-5 h-5 mr-2" />
-              <span className="font-roboto text-sm">{date}</span>
+            <div className="flex items-center  gap-[8px]">
+              <img
+                src={
+                  profilePicture || clientInfo?.ProfilePicture || "invalid.jpg"
+                }
+                alt="Profile"
+                className="w-14 h-14 rounded-full mb-2 object-cover"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "https://picsum.photos/200/300";
+                }}
+              />
+              <h3 className="text-base sm:text-xl font-semibold font-roboto">
+                {fullName}
+              </h3>
             </div>
-            <span className="text-[#00000099] mx-1 w-full">|</span>
 
-            <div className="flex items-center w-full">
-              <img src={clock} alt="clock" className="w-5 h-5 mr-2" />
-              <span className="font-roboto md:text-sm text-[12px]">
-                {timeRange}
-              </span>
-            </div>
+            {status !== "in_progress" && (
+              <div className="flex items-center mt-2 justify-between w-full bg-secondary rounded-xl text-gray-700 py-3 px-4">
+                <div className="flex items-center justify-end w-full md:text-sm text-[12px]">
+                  <img src={calendar} alt="calendar" className="w-5 h-5 mr-2" />
+                  <span className="font-roboto text-sm">{date}</span>
+                </div>
+                <span className="text-[#00000099] mx-1 w-full">|</span>
+
+                <div className="flex items-center w-full">
+                  <img src={clock} alt="clock" className="w-5 h-5 mr-2" />
+                  <span className="font-roboto md:text-sm text-[12px]">
+                    {timeRange}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
-          }
-         
-        </div>
-       </>
+        </>
       );
     }
 
-    // Standard content for card and detail variants
     return (
       <>
-        {/* Status and More Button */}
         <div className="flex justify-between items-start mb-2">
           <span
             className={`px-3 py-1 rounded-full text-[13px] font-semibold ${getStatusColor(
@@ -215,7 +196,6 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
           )}
         </div>
 
-        {/* Client Info Section */}
         <div className="flex items-center mb-2">
           <img
             src={profilePicture || clientInfo?.ProfilePicture || "invalid.jpg"}
@@ -244,7 +224,6 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
           </div>
         </div>
 
-        {/* Location Section */}
         {showLocationSection && (
           <div className="flex items-start text-xs sm:text-base text-gray-500 mb-4">
             <img
@@ -256,7 +235,6 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
           </div>
         )}
 
-        {/* Date and Time Section */}
         {showDateTimeSection && (
           <div className="flex items-center text-xs sm:text-base justify-around bg-secondary rounded-xl text-gray-700 py-2 sm:py-3 mb-4">
             <div className="flex items-center">
@@ -280,7 +258,6 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
           </div>
         )}
 
-        {/* Action Buttons - Only shown in card variant and if showActions is true */}
         {variant === "card" && showActions && (
           <>
             {status === "Scheduled" || status === "upcoming" ? (

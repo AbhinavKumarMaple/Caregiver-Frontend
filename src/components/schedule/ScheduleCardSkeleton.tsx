@@ -1,4 +1,3 @@
-// src/components/schedule/ScheduleCardSkeleton.tsx
 import React from "react";
 import Skeleton from "../common/Skeleton";
 
@@ -17,10 +16,8 @@ const ScheduleCardSkeleton: React.FC<ScheduleCardSkeletonProps> = ({
         className={`rounded-2xl bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50 animate-shimmer bg-shimmer p-4 ${className}`}
       >
         <div className="flex flex-col items-center text-center py-2 px-2">
-          {/* Service Name */}
           <Skeleton width={180} height={18} className="mb-4" />
 
-          {/* Profile Picture and Name */}
           <div className="flex items-center mb-2 gap-2">
             <Skeleton
               variant="circular"
@@ -31,7 +28,6 @@ const ScheduleCardSkeleton: React.FC<ScheduleCardSkeletonProps> = ({
             <Skeleton width={140} height={20} />
           </div>
 
-          {/* Date and Time Section */}
           <div className="w-full bg-gradient-to-r from-teal-50 via-teal-100 to-teal-50 animate-shimmer bg-shimmer rounded-xl py-3 px-4 mt-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center w-full">
@@ -66,13 +62,11 @@ const ScheduleCardSkeleton: React.FC<ScheduleCardSkeletonProps> = ({
     <div
       className={`p-5 rounded-2xl shadow-sm bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 animate-shimmer bg-shimmer ${className}`}
     >
-      {/* Status and More Button */}
       <div className="flex justify-between items-start mb-2">
         <Skeleton width={80} height={24} className="rounded-full" />
         <Skeleton variant="circular" width={24} height={24} />
       </div>
 
-      {/* Client Info Section */}
       <div className="flex items-center mb-2">
         <Skeleton variant="circular" width={64} height={64} className="mr-3" />
         <div className="flex-1">
@@ -81,7 +75,6 @@ const ScheduleCardSkeleton: React.FC<ScheduleCardSkeletonProps> = ({
         </div>
       </div>
 
-      {/* Location Section */}
       <div className="flex items-start mb-4">
         <Skeleton
           variant="circular"
@@ -92,7 +85,6 @@ const ScheduleCardSkeleton: React.FC<ScheduleCardSkeletonProps> = ({
         <Skeleton width="80%" height={16} />
       </div>
 
-      {/* Date and Time Section */}
       <div className="bg-gradient-to-r from-teal-50 via-teal-100 to-teal-50 animate-shimmer bg-shimmer rounded-xl py-3 mb-4">
         <div className="flex items-center justify-around">
           <div className="flex items-center">
@@ -117,7 +109,6 @@ const ScheduleCardSkeleton: React.FC<ScheduleCardSkeletonProps> = ({
         </div>
       </div>
 
-      {/* Action Button */}
       <Skeleton
         width="100%"
         height={44}

@@ -9,16 +9,13 @@ export default function Profile() {
   const [userData, setUserData] = useState<User | null>(null);
 
   useEffect(() => {
-    // Get user data from localStorage
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
       try {
         const parsedUserData = JSON.parse(storedUserData);
-        // Verify the ID matches the params (optional security check)
         if (parsedUserData.ID === id || parsedUserData.id === id) {
           setUserData(parsedUserData);
         } else {
-          // Log warning only in development
           if (
             typeof process !== "undefined" &&
             process.env.NODE_ENV === "development"
@@ -28,7 +25,6 @@ export default function Profile() {
           setUserData(parsedUserData); // Still set the data, but log warning
         }
       } catch (error) {
-        // Log error only in development
         if (
           typeof process !== "undefined" &&
           process.env.NODE_ENV === "development"

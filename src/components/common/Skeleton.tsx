@@ -1,4 +1,3 @@
-// src/components/common/Skeleton.tsx
 import React from "react";
 
 interface SkeletonProps {
@@ -48,7 +47,6 @@ const Skeleton: React.FC<SkeletonProps> = ({
   if (height)
     style.height = typeof height === "number" ? `${height}px` : height;
 
-  // Add background-size for shimmer animation
   if (animation === "wave") {
     style.backgroundSize = "200% 100%";
   }

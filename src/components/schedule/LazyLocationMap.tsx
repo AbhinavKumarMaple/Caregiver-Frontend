@@ -1,8 +1,6 @@
-// src/components/schedule/LazyLocationMap.tsx
 import React, { Suspense, lazy } from "react";
 import LocationMapSkeleton from "./LocationMapSkeleton";
 
-// Lazy load the LocationMap component
 const LocationMap = lazy(() => import("./LocationMap"));
 
 interface LazyLocationMapProps {

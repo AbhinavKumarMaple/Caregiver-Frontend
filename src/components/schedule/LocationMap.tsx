@@ -1,4 +1,3 @@
-// src/components/schedule/LocationMap.tsx
 import React from "react";
 import { location as locationIcon } from "../../assets";
 
@@ -26,14 +25,10 @@ const LocationMap: React.FC<LocationMapProps> = ({
   const hasValidLocation =
     location && location.lat !== null && location.long !== null;
 
-  // For a real implementation, you would use a mapping library like Google Maps, Mapbox, or Leaflet
-  // This is a placeholder that shows the location information
-
   return (
     <div className="mt-8">
       {hasValidLocation ? (
         <div className="flex flex-col md:flex-row items-center overflow-hidden">
-          {/* Google Maps iframe - with square dimensions and rounded corners */}
           <div className="h-[178px] w-[243px] md:w-map rounded-[16px] overflow-hidden">
             <iframe
               title={`${title} Map`}
@@ -44,7 +39,6 @@ const LocationMap: React.FC<LocationMapProps> = ({
               allowFullScreen
             ></iframe>
           </div>
-          {/* Address on the right side with 20px gap */}
           <div className="p-4 w-full md:w-1/2 md:ml-5">
             {address && (
               <div className="flex items-start">
@@ -58,9 +52,6 @@ const LocationMap: React.FC<LocationMapProps> = ({
                 </div>
               </div>
             )}
-            {/* <div className="font-roboto font-normal text-description text-gray-500 mt-2">
-              Coordinates: {location.lat}, {location.long}
-            </div> */}
           </div>
         </div>
       ) : (

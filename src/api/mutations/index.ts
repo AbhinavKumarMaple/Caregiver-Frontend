@@ -1,3 +1,2 @@
-// src/api/mutations/index.ts
-export * from './scheduleMutations';
-export * from './taskMutations';
+export * from "./scheduleMutations";
+export { createTask, deleteTask } from "./taskMutations";

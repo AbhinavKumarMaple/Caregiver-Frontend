@@ -1,4 +1,3 @@
-// src/components/schedule/ScheduleCompletionModal.tsx
 import React from "react";
 import Modal from "../common/Modal";
 import CompletionIcon from "../../assets/icons/completed.svg";
@@ -29,7 +28,6 @@ const ScheduleCompletionModal: React.FC<ScheduleCompletionModalProps> = ({
       className="w-full h-full flex items-center justify-center bg-opacity-0 bg-[#0d5d590]"
     >
       <div className="md:rounded-[20px] md:bg-white md:h-[452px] md:w-[500px] md:shadow-lg md:relative bg-[#0d5d59] fixed inset-0 flex flex-col">
-        {/* Close button */}
         <button
           onClick={onClose}
           className="!bg-opacity-0 md:!bg-white sm:!bg-[#0D5D59]	 absolute md:top-4 md:right-4 top-6 right-6 sm:text-white md:text-black text-gray-500 md:hover:text-gray-500 hover:text-gray-400"
@@ -49,17 +47,13 @@ const ScheduleCompletionModal: React.FC<ScheduleCompletionModalProps> = ({
           </svg>
         </button>
 
-        {/* Content */}
         <div className="flex-1 flex flex-col items-center justify-center text-center md:p-6 px-8 ">
-          {/* Completion icon */}
           <img src={CompletionIcon} className="w-[140px] h-[140px] md:mb-4" />
 
-          {/* Title */}
           <h2 className="md:text-[24px] md:font-bold md:text-gray-900 md:mb-4 text-[24px] font-roboto font-bold text-white mt-6">
             Schedule Completed
           </h2>
 
-          {/* Date and time info */}
           <div className="md:w-full md:border-none md:border-gray-100 md:rounded-none md:bg-white md:p-4 md:mb-6 bg-[#FFFFFF20] md:bg-[#0A4A47] rounded-lg p-4 mt-6 w-full">
             <div className="flex items-center space-x-3 mb-3">
               <img
@@ -93,7 +87,6 @@ const ScheduleCompletionModal: React.FC<ScheduleCompletionModalProps> = ({
           </div>
         </div>
 
-        {/* Go to Home button */}
         <div className="md:px-6 md:pb-6 p-8 md:relative md:top-[-85px] ">
           <button
             onClick={onGoHome}

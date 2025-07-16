@@ -1,4 +1,3 @@
-// src/components/common/LoadingSpinner.tsx
 import React from "react";
 
 interface LoadingSpinnerProps {
@@ -47,12 +46,10 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   return (
     <div className={`flex flex-col items-center justify-center ${className}`}>
       <div className="relative">
-        {/* Outer ring */}
         <div
           className={`${getSizeClasses()} ${getColorClasses()} animate-spin rounded-full border-2 border-current border-t-transparent`}
         />
 
-        {/* Inner gradient ring for enhanced effect */}
         <div
           className={`absolute inset-0 ${getSizeClasses()} animate-spin rounded-full`}
           style={{

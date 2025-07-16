@@ -1,4 +1,3 @@
-// src/router/index.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
@@ -16,8 +15,6 @@ const AppRouter: React.FC = () => {
             path="/schedule/:scheduleId"
             element={<ScheduleDetailPage />}
           />
-          {/* Removed duplicate route that was causing infinite loop */}
-          {/* <Route path="/schedule/:id" element={<ScheduleDetail />} /> */}
           <Route path="/profile/:id" element={<Profile />} />
         </Routes>
       </MainLayout>

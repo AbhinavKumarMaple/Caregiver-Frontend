@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -15,7 +14,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 
 html {
@@ -55,8 +53,6 @@ button {
   cursor: pointer;
 }
 
-
-/* Optional: Keep dark mode as an option for users who prefer it */
 @media (prefers-color-scheme: dark) {
   :root.dark-theme {
     color: rgba(255, 255, 255, 0.87);
@@ -87,7 +83,6 @@ button {
   --toaster-border-radius: 8px;
 }
 
-/* Optional: Custom styling for Sonner toasts */
 .sonner-toast {
   @apply shadow-lg;
 }

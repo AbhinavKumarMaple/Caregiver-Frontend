@@ -1,4 +1,3 @@
-// src/api/mutations/scheduleMutations.ts
 import api from "../../lib/axios";
 import type {
   CheckInRequest,
@@ -35,32 +34,22 @@ interface UpdateScheduleData {
 }
 
 export const createSchedule = (data: CreateScheduleData) => {
-  // Placeholder for creating schedule data
   return Promise.resolve(data);
 };
 
 export const updateSchedule = (id: string, data: UpdateScheduleData) => {
-  // Placeholder for updating schedule data
   return Promise.resolve({ id, ...data });
 };
 
 export const deleteSchedule = (id: string) => {
-  // Placeholder for deleting schedule data
   return Promise.resolve({ id, success: true });
 };
 
-/**
- * Performs check-in (start) for a schedule
- * @param scheduleId The ID of the schedule to check in
- * @param data Location data for check-in
- * @returns Promise with check-in response
- */
 export const checkInSchedule = async (
   scheduleId: string,
   data: CheckInRequest
 ): Promise<CheckInResponse> => {
   try {
-    // Format the payload according to the API requirements
     const payload = {
       Timestamp: new Date().toISOString(),
       Location: {
@@ -75,7 +64,6 @@ export const checkInSchedule = async (
     );
     return response.data;
   } catch (error) {
-    // Log error only in development
     if (
       typeof process !== "undefined" &&
       process.env.NODE_ENV === "development"
@@ -86,18 +74,11 @@ export const checkInSchedule = async (
   }
 };
 
-/**
- * Performs checkout (end) for a schedule
- * @param scheduleId The ID of the schedule to check out
- * @param data Location data for checkout
- * @returns Promise with checkout response
- */
 export const checkOutSchedule = async (
   scheduleId: string,
   data: CheckOutRequest
 ): Promise<CheckOutResponse> => {
   try {
-    // Format the payload according to the API requirements
     const payload = {
       Timestamp: new Date().toISOString(),
       Location: {
@@ -109,7 +90,6 @@ export const checkOutSchedule = async (
     const response = await api.post(`/v1/schedules/${scheduleId}/end`, payload);
     return response.data;
   } catch (error) {
-    // Log error only in development
     if (
       typeof process !== "undefined" &&
       process.env.NODE_ENV === "development"
@@ -120,16 +100,10 @@ export const checkOutSchedule = async (
   }
 };
 
-/**
- * Cancels a check-in for a schedule
- * @param scheduleId The ID of the schedule to cancel check-in
- * @returns Promise with cancel check-in response
- */
 export const cancelCheckIn = async (
   scheduleId: string
 ): Promise<CancelCheckInResponse> => {
   try {
-    // Format the payload according to the API requirements
     const payload = {
       VisitStatus: "cancelled",
     };
@@ -137,7 +111,6 @@ export const cancelCheckIn = async (
     const response = await api.put(`/v1/schedules/${scheduleId}`, payload);
     return response.data;
   } catch (error) {
-    // Log error only in development
     if (
       typeof process !== "undefined" &&
       process.env.NODE_ENV === "development"
@@ -147,13 +120,6 @@ export const cancelCheckIn = async (
     throw error;
   }
 };
-/**
- * Updates the status of a task in a schedule
- * @param scheduleId The ID of the schedule containing the task
- * @param taskId The ID of the task to update
- * @param data Task update data
- * @returns Promise with task update response
- */
 export const updateTaskStatus = async (
   scheduleId: string,
   taskId: string,
@@ -166,7 +132,6 @@ export const updateTaskStatus = async (
     );
     return response.data;
   } catch (error) {
-    // Log error only in development
     if (
       typeof process !== "undefined" &&
       process.env.NODE_ENV === "development"
@@ -176,12 +141,6 @@ export const updateTaskStatus = async (
     throw error;
   }
 };
-/**
- * Saves service notes for a schedule
- * @param scheduleId The ID of the schedule
- * @param data Notes data
- * @returns Promise with save notes response
- */
 export const saveServiceNotes = async (
   scheduleId: string,
   data: SaveNotesRequest
@@ -190,7 +149,6 @@ export const saveServiceNotes = async (
     const response = await api.patch(`/v1/schedules/${scheduleId}/notes`, data);
     return response.data;
   } catch (error) {
-    // Log error only in development
     if (
       typeof process !== "undefined" &&
       process.env.NODE_ENV === "development"
@@ -200,12 +158,6 @@ export const saveServiceNotes = async (
     throw error;
   }
 };
-/**
- * Updates a task with status and feedback
- * @param taskId The ID of the task to update
- * @param data Task update data including status and feedback
- * @returns Promise with task update response
- */
 interface TaskUpdateResponse {
   id: string;
   status: "completed" | "not_completed";
@@ -226,7 +178,6 @@ export const updateTask = async (
     const response = await api.post(`/v1/tasks/${taskId}/update`, data);
     return response.data;
   } catch (error) {
-    // Log error only in development
     if (
       typeof process !== "undefined" &&
       process.env.NODE_ENV === "development"

@@ -1,4 +1,3 @@
-// src/components/schedule/TaskListSkeleton.tsx
 import React from "react";
 import Skeleton from "../common/Skeleton";
 
@@ -13,10 +12,8 @@ const TaskListSkeleton: React.FC<TaskListSkeletonProps> = ({
 }) => {
   return (
     <div className={`mb-6 ${className}`}>
-      {/* Tasks Title */}
       <Skeleton width={100} height={20} className="mb-4" />
 
-      {/* Task Items */}
       <div className="space-y-3">
         {Array.from({ length: taskCount }).map((_, index) => (
           <div
@@ -24,7 +21,6 @@ const TaskListSkeleton: React.FC<TaskListSkeletonProps> = ({
             className="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 animate-shimmer bg-shimmer rounded-task p-4"
           >
             <div className="flex items-start space-x-3">
-              {/* Checkbox skeleton */}
               <Skeleton
                 variant="circular"
                 width={20}
@@ -33,27 +29,23 @@ const TaskListSkeleton: React.FC<TaskListSkeletonProps> = ({
               />
 
               <div className="flex-1">
-                {/* Task title */}
                 <Skeleton
                   width={`${Math.random() * 30 + 60}%`}
                   height={18}
                   className="mb-2"
                 />
 
-                {/* Task description */}
                 <Skeleton
                   width={`${Math.random() * 40 + 50}%`}
                   height={14}
                   className="mb-2"
                 />
 
-                {/* Sometimes add a second line for description */}
                 {Math.random() > 0.5 && (
                   <Skeleton width={`${Math.random() * 50 + 30}%`} height={14} />
                 )}
               </div>
 
-              {/* Action button skeleton */}
               <div className="flex flex-col space-y-2">
                 <Skeleton
                   width={78}

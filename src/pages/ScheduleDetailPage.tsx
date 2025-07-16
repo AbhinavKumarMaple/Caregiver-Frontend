@@ -1,5 +1,4 @@
-// src/pages/ScheduleDetailPage.tsx
-import React, { useState, Suspense } from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getScheduleById } from "../api/queries/scheduleQueries";
@@ -32,15 +31,12 @@ const ScheduleDetailPage: React.FC = () => {
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  // Using sonner toast directly
 
-  // Local state
   const [isActionLoading, setIsActionLoading] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
 
-  // Fetch schedule details
   const {
     data: schedule,
     isLoading,
@@ -51,7 +47,6 @@ const ScheduleDetailPage: React.FC = () => {
     enabled: !!scheduleId,
   });
 
-  // Check-in mutation
   const checkInMutation = useMutation({
     mutationFn: ({
       scheduleId,
@@ -62,7 +57,9 @@ const ScheduleDetailPage: React.FC = () => {
     }) => checkInSchedule(scheduleId, { location }),
     onSuccess: () => {
       setActionSuccess("Successfully checked in!");
-      queryClient.invalidateQueries({ queryKey: ["schedules", "ecd75215-960b-484b-a184-736f8fca4e59"] });
+      queryClient.invalidateQueries({
+        queryKey: ["schedules", "ecd75215-960b-484b-a184-736f8fca4e59"],
+      });
 
       setTimeout(() => setActionSuccess(null), 3000);
     },
@@ -75,7 +72,6 @@ const ScheduleDetailPage: React.FC = () => {
     },
   });
 
-  // Check-out mutation
   const checkOutMutation = useMutation({
     mutationFn: ({
       scheduleId,
@@ -97,7 +93,6 @@ const ScheduleDetailPage: React.FC = () => {
     },
   });
 
-  // Cancel check-in mutation
   const cancelCheckInMutation = useMutation({
     mutationFn: (scheduleId: string) => cancelCheckIn(scheduleId),
     onSuccess: () => {
@@ -114,7 +109,6 @@ const ScheduleDetailPage: React.FC = () => {
     },
   });
 
-  // Helper function to request location permission directly
   const requestLocationPermission = (): Promise<GeolocationPosition> => {
     return new Promise((resolve, reject) => {
       if (!navigator.geolocation) {
@@ -170,22 +164,15 @@ const ScheduleDetailPage: React.FC = () => {
     });
   };
 
-  // Helper function to get current location with improved error handling
   const getCurrentLocation = async (): Promise<LocationData> => {
-    try {
-      // This will trigger the browser's permission prompt if permission hasn't been granted yet
-      const position = await requestLocationPermission();
+    const position = await requestLocationPermission();
 
-      return {
-        lat: position.coords.latitude,
-        long: position.coords.longitude,
-      };
-    } catch (error) {
-      throw error; // Re-throw the error to be handled by the caller
-    }
+    return {
+      lat: position.coords.latitude,
+      long: position.coords.longitude,
+    };
   };
 
-  // Handle check-in action
   const handleCheckIn = async () => {
     if (!scheduleId) return;
 
@@ -193,7 +180,6 @@ const ScheduleDetailPage: React.FC = () => {
     setActionError(null);
 
     try {
-      // First try to get the location
       let location: LocationData;
       try {
         location = await getCurrentLocation();
@@ -204,18 +190,16 @@ const ScheduleDetailPage: React.FC = () => {
         return;
       }
 
-      // If location is obtained successfully, proceed with check-in
       try {
         await checkInMutation.mutateAsync({ scheduleId, location });
         showToast("Successfully checked in!", "success");
         // Revalidate the schedules query
-        setCurrScheduleId(scheduleId)
+        setCurrScheduleId(scheduleId);
       } catch (error) {
         showToast(`Check-in failed: ${(error as Error).message}`, "error");
         setIsActionLoading(false);
       }
     } catch (error) {
-      // This is a fallback in case of unexpected errors
       showToast(
         `An unexpected error occurred: ${(error as Error).message}`,
         "error"
@@ -224,7 +208,6 @@ const ScheduleDetailPage: React.FC = () => {
     }
   };
 
-  // Handle check-out action
   const handleCheckOut = async () => {
     if (!scheduleId) return;
 
@@ -232,7 +215,6 @@ const ScheduleDetailPage: React.FC = () => {
     setActionError(null);
 
     try {
-      // First try to get the location
       let location: LocationData;
       try {
         location = await getCurrentLocation();
@@ -243,7 +225,6 @@ const ScheduleDetailPage: React.FC = () => {
         return;
       }
 
-      // If location is obtained successfully, proceed with check-out
       try {
         await checkOutMutation.mutateAsync({ scheduleId, location });
         showToast("Successfully checked out!", "success");
@@ -252,7 +233,6 @@ const ScheduleDetailPage: React.FC = () => {
         setIsActionLoading(false);
       }
     } catch (error) {
-      // This is a fallback in case of unexpected errors
       showToast(
         `An unexpected error occurred: ${(error as Error).message}`,
         "error"
@@ -261,7 +241,6 @@ const ScheduleDetailPage: React.FC = () => {
     }
   };
 
-  // Handle cancel check-in action
   const handleCancelCheckIn = async () => {
     if (!scheduleId) return;
 
@@ -277,7 +256,6 @@ const ScheduleDetailPage: React.FC = () => {
     }
   };
 
-  // Task update mutation using the new API endpoint
   const updateTaskMutation = useMutation({
     mutationFn: ({
       taskId,
@@ -291,7 +269,9 @@ const ScheduleDetailPage: React.FC = () => {
       feedback?: string;
     }) => updateTask(taskId, { status, done, feedback }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["schedules", "ecd75215-960b-484b-a184-736f8fca4e59"] });
+      queryClient.invalidateQueries({
+        queryKey: ["schedules", "ecd75215-960b-484b-a184-736f8fca4e59"],
+      });
     },
     onError: (error: Error) => {
       setActionError(`Failed to update task: ${error.message}`);
@@ -299,7 +279,6 @@ const ScheduleDetailPage: React.FC = () => {
     },
   });
 
-  // Handle task update
   const handleTaskUpdate = async (
     taskId: string,
     status: "completed" | "not_completed",
@@ -315,11 +294,9 @@ const ScheduleDetailPage: React.FC = () => {
         feedback,
       });
     } catch (error) {
-      // Error handling is done in the mutation
+      console.log("Error updating task:", error);
     }
   };
-
-  // Notes are now read-only, so we don't need a handleSaveNotes function
 
   if (isLoading) {
     return <ScheduleDetailSkeleton />;
@@ -340,17 +317,12 @@ const ScheduleDetailPage: React.FC = () => {
     );
   }
 
-  // Format address from client location
- 
-
-  // Convert API status to our internal format
   const visitStatus = schedule.VisitStatus.toLowerCase() as
     | "upcoming"
     | "in_progress"
     | "completed"
     | "missed";
 
-  // Format date and time
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -360,18 +332,7 @@ const ScheduleDetailPage: React.FC = () => {
       year: "numeric",
     });
   };
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-  };
 
- 
-
-  // Calculate duration
   const calculateDuration = (from: string, to: string) => {
     const fromDate = new Date(from);
     const toDate = new Date(to);
@@ -392,7 +353,6 @@ const ScheduleDetailPage: React.FC = () => {
     }
   };
 
-  // Handle modal actions
   const handleCloseModal = () => {
     setShowCompletionModal(false);
   };
@@ -400,39 +360,11 @@ const ScheduleDetailPage: React.FC = () => {
   const handleGoHome = () => {
     setShowCompletionModal(false);
     navigate("/");
-    
   };
-  console.log(schedule)
+  console.log(schedule);
 
   return (
     <>
-      {/* Header with reduced width to match content */}
-      {/* <div className="flex justify-center w-full md:mt-4">
-        <div className="w-full  flex items-center mb-4">
-          <button
-            onClick={() => navigate(-1)}
-            className="!p-0 mr-2 text-gray-600 hover:text-gray-800"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
-            </svg>
-          </button>
-          <span className="font-roboto font-semibold text-[1.5rem] leading-task-title">
-            Schedule Details
-          </span>
-        </div>
-      </div> */}
       <Title func={() => navigate(-1)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -449,20 +381,20 @@ const ScheduleDetailPage: React.FC = () => {
           />
         </svg>
         <span className="font-roboto font-semibold  ">
-          {
-        visitStatus === 'in_progress' ? "Clock-out": "Schedule Details"
-        }
+          {visitStatus === "in_progress" ? "Clock-out" : "Schedule Details"}
         </span>
       </Title>
 
-      {/* Content area */}
       <div className="flex flex-col items-center w-full">
         <div className="w-full ">
           <div className="rounded-2xl p-4 sm:px-0">
             <ErrorBoundary>
-            {schedule?.CheckinTime && <DurationTimer
-            className="font-semibold text-[#1D1D1BDE] text-[32px] mb-5 text-center"
-            checkinTime={schedule.CheckinTime} />}
+              {schedule?.CheckinTime && (
+                <DurationTimer
+                  className="font-semibold text-[#1D1D1BDE] text-[32px] mb-5 text-center"
+                  checkinTime={schedule.CheckinTime}
+                />
+              )}
               <LazyScheduleCard
                 id={schedule.ID}
                 status={visitStatus}
@@ -483,8 +415,8 @@ const ScheduleDetailPage: React.FC = () => {
             </ErrorBoundary>
 
             <section className="flex flex-col gap-6">
-               <div className="flex flex-col">
-               <h3 className="text-[20px] font-semibold">CLient Contant:</h3>
+              <div className="flex flex-col">
+                <h3 className="text-[20px] font-semibold">CLient Contant:</h3>
                 <div className="space-y-2 mt-2 text-sm sm:text-base">
                   <p className="flex gap-2 items-center">
                     <img src={email} alt="email" className="h-7 w-7" />
@@ -495,18 +427,23 @@ const ScheduleDetailPage: React.FC = () => {
                     <span className="">{"+44 1232 212 3233"}</span>
                   </p>
                 </div>
-               </div>
-               <div className="flex flex-col">
-               <h3 className="text-[20px] font-semibold">Address:</h3>
+              </div>
+              <div className="flex flex-col">
+                <h3 className="text-[20px] font-semibold">Address:</h3>
                 <div className="space-y-2 mt-2 text-sm sm:text-base">
-                    <span className="block">{schedule.ClientInfo?.Location?.house_number} {schedule.ClientInfo?.Location?.street}</span>
-                    <span className="">{schedule.ClientInfo?.Location?.city}, {schedule.ClientInfo?.Location?.state}, {schedule.ClientInfo?.Location?.pincode}</span>
+                  <span className="block">
+                    {schedule.ClientInfo?.Location?.house_number}{" "}
+                    {schedule.ClientInfo?.Location?.street}
+                  </span>
+                  <span className="">
+                    {schedule.ClientInfo?.Location?.city},{" "}
+                    {schedule.ClientInfo?.Location?.state},{" "}
+                    {schedule.ClientInfo?.Location?.pincode}
+                  </span>
                 </div>
-               </div>
-
+              </div>
             </section>
 
-            {/* Task List Component */}
             <ErrorBoundary>
               <LazyTaskList
                 tasks={schedule.Tasks.map((task) => ({
@@ -521,10 +458,8 @@ const ScheduleDetailPage: React.FC = () => {
               />
             </ErrorBoundary>
 
-            {/* Service Notes Component */}
             <ServiceNotes notes={schedule.ServiceNote} />
 
-            {/* Location Map Component for Check-in Location */}
             {(schedule.CheckinTime || visitStatus === "in_progress") && (
               <div className="mt-[1.5rem]">
                 <h3 className="font-roboto font-semibold text-task-title leading-task-title text-task-text mb-8">
@@ -539,7 +474,6 @@ const ScheduleDetailPage: React.FC = () => {
               </div>
             )}
 
-            {/* Success/Error messages */}
             {actionSuccess && (
               <div className="mt-16 bg-green-50 text-green-800 p-8 rounded-task font-roboto font-normal text-description leading-description">
                 {actionSuccess}
@@ -552,7 +486,6 @@ const ScheduleDetailPage: React.FC = () => {
               </div>
             )}
 
-            {/* Action Buttons Component */}
             <ActionButtons
               visitStatus={visitStatus}
               onCheckin={handleCheckIn}
@@ -564,7 +497,6 @@ const ScheduleDetailPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Schedule Completion Modal */}
       <ScheduleCompletionModal
         isOpen={showCompletionModal}
         onClose={handleCloseModal}

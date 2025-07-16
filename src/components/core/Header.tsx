@@ -20,19 +20,19 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    // Handle outside clicks
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     }
-    
-    // Add event listener when dropdown is shown
+
     if (showDropdown) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-    
-    // Clean up the event listener
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -48,15 +48,16 @@ export default function Header() {
       <div className="hidden md:flex justify-between items-center bg-secondary p-2 rounded-[20px]">
         <div className="flex items-center">
           <img src={logo} alt="Careviah Logo" className="h-8 mr-2" />{" "}
-          {/* Placeholder for logo */}
         </div>
         <div className="relative" ref={dropdownRef}>
-          <div 
+          <div
             className="flex items-center hover:bg-secondary cursor-pointer p-2 rounded-2xl"
             onClick={() => setShowDropdown(!showDropdown)}
           >
             <img
-              src={"https://th.bing.com/th/id/OIP.lw60ifYN2dZGB9RY_cEuCQHaEc?w=307&h=184&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"}
+              src={
+                "https://th.bing.com/th/id/OIP.lw60ifYN2dZGB9RY_cEuCQHaEc?w=307&h=184&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+              }
               alt="User Profile"
               className="w-10 h-10 rounded-full mr-2"
             />
@@ -71,10 +72,12 @@ export default function Header() {
             <img
               src={chevron_down}
               alt="chevron-down"
-              className={`ml-3 w-6 h-6 text-gray-600 transition-transform ${showDropdown ? 'rotate-180' : ''}`}
+              className={`ml-3 w-6 h-6 text-gray-600 transition-transform ${
+                showDropdown ? "rotate-180" : ""
+              }`}
             />
           </div>
-          
+
           {showDropdown && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg p-1 z-10">
               <button
