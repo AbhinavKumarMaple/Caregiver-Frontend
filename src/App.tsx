@@ -1,6 +1,6 @@
-import AppRouter from "./router";
+import AppRouter from "./core/router";
 import { Toaster } from "sonner";
-import { showToast } from "./utils/toast";
+import { showToast } from "./shared/utils/toast";
 
 function App() {
   showToast("Welcome to the app!", "success");
@@ -13,8 +13,8 @@ function App() {
         className="z-[999999] mb-20"
         toastOptions={{
           classNames: {
-            toast: 'animate-slide-in-right',
-          }
+            toast: "animate-slide-in-right",
+          },
         }}
       />
       <AppRouter />
