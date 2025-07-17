@@ -105,25 +105,93 @@ const TaskList: React.FC<TaskListProps> = ({
                   {task.description}
                 </p>
               </div>
-              {task.status != "pending" && (
-                <>
-                  {isInteractive ? (
-                    <div className="mt-4">
-                      <div className="flex items-center gap-[16px]">
-                        <button
-                          onClick={() => handleTaskToggle(task.id, "yes")}
-                          className={`flex items-center ${
+              {/* {task.status != "completed" && ( */}
+              <>
+                {isInteractive ? (
+                  <div className="mt-4">
+                    <div className="flex items-center gap-[16px]">
+                      <button
+                        onClick={() => handleTaskToggle(task.id, "yes")}
+                        className={`flex items-center ${
+                          selectedOptions[task.id] === "yes"
+                            ? "text-green-600 !bg-[#2DA6FF1F]"
+                            : "text-gray-500"
+                        } w-button-select h-button-select rounded-button bg-button-select-bg p-2`}
+                      >
+                        <svg
+                          className={`h-5 w-5 mr-1 ${
                             selectedOptions[task.id] === "yes"
-                              ? "text-green-600 !bg-[#2DA6FF1F]"
-                              : "text-gray-500"
-                          } w-button-select h-button-select rounded-button bg-button-select-bg p-2`}
+                              ? "text-green-600"
+                              : "text-gray-400"
+                          }`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
                         >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        <span>Yes</span>
+                      </button>
+
+                      <span className="text-gray-300 mx-1">|</span>
+
+                      <button
+                        onClick={() => handleTaskToggle(task.id, "no")}
+                        className={`flex items-center ${
+                          selectedOptions[task.id] === "no"
+                            ? "text-red-500 !bg-[#2DA6FF1F]"
+                            : "text-gray-500"
+                        } w-button-select h-button-select rounded-button bg-button-select-bg p-2`}
+                      >
+                        <svg
+                          className="h-5 w-5 mr-1 text-red-500"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                        <span>No</span>
+                      </button>
+                    </div>
+
+                    {showReasonInput === task.id && (
+                      <div className="mt-4">
+                        <input
+                          type="text"
+                          placeholder="Add reason..."
+                          className="w-full p-2 px-4 border bg-white border-[#0000003B] rounded-[14px] focus:outline-none focus:ring-0 focus:ring-[#0000003B] font-roboto font-normal text-input-text leading-input-text"
+                          value={taskReasons[task.id] || ""}
+                          onChange={(e) =>
+                            handleReasonChange(task.id, e.target.value)
+                          }
+                          onBlur={() => handleReasonBlur(task.id)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handleReasonBlur(task.id);
+                            }
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="mt-4">
+                    <div className="flex items-center">
+                      {task.status === "completed" ? (
+                        <div className="flex items-center text-green-600 w-button-select h-button-select rounded-button bg-button-select-bg p-2">
                           <svg
-                            className={`h-5 w-5 mr-1 ${
-                              selectedOptions[task.id] === "yes"
-                                ? "text-green-600"
-                                : "text-gray-400"
-                            }`}
+                            className="h-5 w-5 mr-1"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -136,107 +204,40 @@ const TaskList: React.FC<TaskListProps> = ({
                             />
                           </svg>
                           <span>Yes</span>
-                        </button>
-
-                        <span className="text-gray-300 mx-1">|</span>
-
-                        <button
-                          onClick={() => handleTaskToggle(task.id, "no")}
-                          className={`flex items-center ${
-                            selectedOptions[task.id] === "no"
-                              ? "text-red-500 !bg-[#2DA6FF1F]"
-                              : "text-gray-500"
-                          } w-button-select h-button-select rounded-button bg-button-select-bg p-2`}
-                        >
-                          <svg
-                            className="h-5 w-5 mr-1 text-red-500"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
-                          <span>No</span>
-                        </button>
-                      </div>
-
-                      {showReasonInput === task.id && (
-                        <div className="mt-4">
-                          <input
-                            type="text"
-                            placeholder="Add reason..."
-                            className="w-full p-2 px-4 border bg-white border-[#0000003B] rounded-[14px] focus:outline-none focus:ring-0 focus:ring-[#0000003B] font-roboto font-normal text-input-text leading-input-text"
-                            value={taskReasons[task.id] || ""}
-                            onChange={(e) =>
-                              handleReasonChange(task.id, e.target.value)
-                            }
-                            onBlur={() => handleReasonBlur(task.id)}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                handleReasonBlur(task.id);
-                              }
-                            }}
-                          />
                         </div>
+                      ) : (
+                        <></>
+                        // <div className="flex items-center text-red-500 w-button-select h-button-select rounded-button bg-button-select-bg p-2">
+                        //   <svg
+                        //     className="h-5 w-5 mr-1"
+                        //     fill="none"
+                        //     viewBox="0 0 24 24"
+                        //     stroke="currentColor"
+                        //   >
+                        //     <path
+                        //       strokeLinecap="round"
+                        //       strokeLinejoin="round"
+                        //       strokeWidth={2}
+                        //       d="M6 18L18 6M6 6l12 12"
+                        //     />
+                        //   </svg>
+                        //   <span>NO</span>
+                        // </div>
                       )}
                     </div>
-                  ) : (
-                    <div className="mt-4">
-                      <div className="flex items-center">
-                        {task.status === "completed" ? (
-                          <div className="flex items-center text-green-600 w-button-select h-button-select rounded-button bg-button-select-bg p-2">
-                            <svg
-                              className="h-5 w-5 mr-1"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                            <span>Yes</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center text-red-500 w-button-select h-button-select rounded-button bg-button-select-bg p-2">
-                            <svg
-                              className="h-5 w-5 mr-1"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M6 18L18 6M6 6l12 12"
-                              />
-                            </svg>
-                            <span>No</span>
-                          </div>
-                        )}
-                      </div>
 
-                      {/* Display feedback for non-interactive tasks */}
-                      {task.feedback && (
-                        <div className="mt-4">
-                          <div className="w-full p-2 border border-gray-200 rounded-full bg-gray-50 font-roboto font-normal text-input-text leading-input-text">
-                            {task.feedback}
-                          </div>
+                    {/* Display feedback for non-interactive tasks */}
+                    {task.feedback && (
+                      <div className="mt-4">
+                        <div className="w-full p-2 border border-gray-200 rounded-full bg-gray-50 font-roboto font-normal text-input-text leading-input-text">
+                          {task.feedback}
                         </div>
-                      )}
-                    </div>
-                  )}
-                </>
-              )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+              {/* )} */}
             </div>
           ))}
         </div>

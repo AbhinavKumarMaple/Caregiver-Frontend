@@ -46,7 +46,6 @@ const ScheduleDetailPage: React.FC = () => {
     queryFn: () => getScheduleById(scheduleId || ""),
     enabled: !!scheduleId,
   });
-
   const checkInMutation = useMutation({
     mutationFn: ({
       scheduleId,
@@ -58,7 +57,7 @@ const ScheduleDetailPage: React.FC = () => {
     onSuccess: () => {
       setActionSuccess("Successfully checked in!");
       queryClient.invalidateQueries({
-        queryKey: ["schedules", "ecd75215-960b-484b-a184-736f8fca4e59"],
+        queryKey: ["schedules", scheduleId],
       });
 
       setTimeout(() => setActionSuccess(null), 3000);
@@ -270,7 +269,7 @@ const ScheduleDetailPage: React.FC = () => {
     }) => updateTask(taskId, { status, done, feedback }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["schedules", "ecd75215-960b-484b-a184-736f8fca4e59"],
+        queryKey: ["schedule", scheduleId],
       });
     },
     onError: (error: Error) => {
@@ -285,12 +284,11 @@ const ScheduleDetailPage: React.FC = () => {
     feedback?: string
   ) => {
     if (!scheduleId) return;
-
     try {
       await updateTaskMutation.mutateAsync({
         taskId,
         status,
-        done: true, // Always true when posting to the API
+        done: true,
         feedback,
       });
     } catch (error) {
@@ -356,9 +354,10 @@ const ScheduleDetailPage: React.FC = () => {
   const handleCloseModal = () => {
     setShowCompletionModal(false);
   };
-
   const handleGoHome = () => {
     setShowCompletionModal(false);
+    // Invalidate and mark schedules query as stale before navigating
+    queryClient.invalidateQueries({ queryKey: ["schedule", scheduleId] });
     navigate("/");
   };
   console.log(schedule);

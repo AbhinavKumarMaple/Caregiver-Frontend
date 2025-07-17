@@ -52,7 +52,7 @@ const ScheduleCompletionModal: React.FC<ScheduleCompletionModalProps> = ({
             Schedule Completed
           </h2>
 
-          <div className="md:w-full md:border-none md:border-gray-100 md:rounded-none md:bg-white md:p-4 md:mb-6 bg-[#FFFFFF20] md:bg-[#0A4A47] rounded-lg p-4 mt-6 w-full">
+          <div className="md:w-full md:border-none md:border-gray-100 md:rounded-none md:bg-white md:p-4 md:mb-6 bg-[#FFFFFF20] sm:bg-[#0A4A47] rounded-lg p-4 mt-6 w-full">
             <div className="flex items-center space-x-3 mb-3">
               <img
                 src={calenderIcon}
