@@ -76,6 +76,7 @@ export const useScheduleCardActions = () => {
         // Call cancel mutation
         await cancelMutation.mutateAsync(scheduleId);
       } catch (error) {
+        console.log(error);
         // Errors are handled by the mutation itself
       }
     },
