@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import type { User } from "../../types/user";
 import { chevron_down, logo } from "../../shared/assets";
+import type { User } from "../../shared/types/user";
 
 export default function Header() {
   const [userData, setUserData] = useState<User | null>(null);
