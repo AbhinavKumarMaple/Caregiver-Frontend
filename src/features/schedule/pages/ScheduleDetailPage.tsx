@@ -390,7 +390,7 @@ const ScheduleDetailPage: React.FC = () => {
         <div className="w-full ">
           <div className="rounded-2xl p-4 sm:px-0">
             <ErrorBoundary>
-              {schedule?.CheckinTime && (
+              {schedule?.CheckinTime && visitStatus === "in_progress" && (
                 <DurationTimer
                   className="font-semibold text-[#1D1D1BDE] text-[32px] mb-5 text-center"
                   checkinTime={schedule.CheckinTime}
