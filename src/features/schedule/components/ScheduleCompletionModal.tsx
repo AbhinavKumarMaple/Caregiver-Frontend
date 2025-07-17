@@ -28,7 +28,7 @@ const ScheduleCompletionModal: React.FC<ScheduleCompletionModalProps> = ({
       <div className="md:rounded-[20px] md:bg-white md:h-[452px] md:w-[500px] md:shadow-lg md:relative bg-[#0d5d59] fixed inset-0 flex flex-col">
         <button
           onClick={onClose}
-          className="!bg-opacity-0 md:!bg-white sm:!bg-[#0D5D59]	 absolute md:top-4 md:right-4 top-6 right-6 sm:text-white md:text-black text-gray-500 md:hover:text-gray-500 hover:text-gray-400"
+          className="!bg-opacity-0 md:!bg-white max-[800px]:!bg-[#0D5D59]	 absolute md:top-4 md:right-4 top-6 right-6 max-[800px]:text-white md:text-black text-gray-500 md:hover:text-gray-500 hover:text-gray-400"
         >
           <svg
             className="md:w-5 md:h-5 w-6 h-6"
@@ -77,7 +77,7 @@ const ScheduleCompletionModal: React.FC<ScheduleCompletionModalProps> = ({
                     ? " SGT"
                     : ""}
                 </div>
-                <div className="text-sm md:text-gray-500 text-gray-300">
+                <div className="text-max-[800px] md:text-gray-500 text-gray-300">
                   ({duration})
                 </div>
               </div>
@@ -88,7 +88,7 @@ const ScheduleCompletionModal: React.FC<ScheduleCompletionModalProps> = ({
         <div className="md:px-6 md:pb-6 p-8 md:relative md:top-[-85px] ">
           <button
             onClick={onGoHome}
-            className="w-full py-3 md:!border md:!border-gray-600 sm:!border sm:!border-white sm:!bg-[#0D5D59]	  sm:text-white  md:!text-black md:!text-[15px] md:hover:bg-gray-50 bg-white text-[#0D5D59] hover:bg-gray-100 rounded-full font-medium transition-colors"
+            className="w-full py-3 md:!border md:!border-gray-600   max-[800px]:bg-[#0D5D59] max-[800px]:text-white max-[800px]:border-white  md:bg-white   md:!text-black md:!text-[15px] md:hover:bg-gray-50  text-[#0D5D59] hover:bg-gray-100 rounded-full font-medium transition-colors"
           >
             Go to Home
           </button>

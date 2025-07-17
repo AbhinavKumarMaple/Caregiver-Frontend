@@ -128,16 +128,6 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
       ? "rounded-2xl bg-[#2DA6FF0A]"
       : "rounded-2xl bg-white";
 
-  // Handle button click events
-  const handleButtonClick = (
-    e: React.MouseEvent,
-    action: () => Promise<void>
-  ) => {
-    e.preventDefault();
-    e.stopPropagation();
-    action();
-  };
-
   if (asLink) {
     return (
       <Link to={`/schedule/${id}`} className={`${cardClasses} ${className}`}>
@@ -288,12 +278,7 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
           <>
             {status === "Scheduled" || status === "upcoming" ? (
               <Button
-                onClick={
-                  onCheckIn
-                    ? (e: React.MouseEvent<HTMLButtonElement>) =>
-                        handleButtonClick(e, () => onCheckIn(id))
-                    : undefined
-                }
+                onClick={onCheckIn ? () => onCheckIn(id) : undefined}
                 disabled={isCheckingIn || !onCheckIn}
               >
                 {isCheckingIn ? "Checking In..." : "Clock-In Now"}
@@ -303,21 +288,16 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
                 <Button
                   variant="ghost"
                   className="flex-1"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    // This button still navigates to the detail page
-                    // No need to prevent default
-                  }}
+                  // onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  //   // This button still navigates to the detail page
+                  //   // No need to prevent default
+                  // }}
                 >
                   View Progress
                 </Button>
                 <Button
                   className="flex-1"
-                  onClick={
-                    onCheckOut
-                      ? (e: React.MouseEvent<HTMLButtonElement>) =>
-                          handleButtonClick(e, () => onCheckOut(id))
-                      : undefined
-                  }
+                  onClick={onCheckOut ? () => onCheckOut(id) : undefined}
                   disabled={isCheckingOut || !onCheckOut}
                 >
                   {isCheckingOut ? "Checking Out..." : "Clock-Out Now"}
@@ -328,11 +308,7 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
             ) : (
               <Button
                 variant="redGhost"
-                onClick={
-                  onCancel
-                    ? (e) => handleButtonClick(e, () => onCancel(id))
-                    : undefined
-                }
+                onClick={onCancel ? () => onCancel(id) : undefined}
                 disabled={
                   isCancelling ||
                   !onCancel ||

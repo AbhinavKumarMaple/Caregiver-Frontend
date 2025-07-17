@@ -22,7 +22,7 @@ export const useCheckInMutation = () => {
       scheduleId: string;
       location: LocationData;
     }) => checkInSchedule(scheduleId, { location }),
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       // Invalidate relevant queries to refresh data
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
       queryClient.invalidateQueries({
@@ -54,7 +54,7 @@ export const useCheckOutMutation = () => {
       scheduleId: string;
       location: LocationData;
     }) => checkOutSchedule(scheduleId, { location }),
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       // Invalidate relevant queries to refresh data
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
       queryClient.invalidateQueries({
@@ -80,7 +80,7 @@ export const useCancelScheduleMutation = () => {
 
   return useMutation({
     mutationFn: (scheduleId: string) => cancelCheckIn(scheduleId),
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       // Invalidate relevant queries to refresh data
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
       queryClient.invalidateQueries({ queryKey: ["schedule", variables] });
