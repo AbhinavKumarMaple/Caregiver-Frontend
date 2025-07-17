@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from "react";
 import ScheduleCardSkeleton from "./ScheduleCardSkeleton";
 import type { DetailedSchedule } from "../../../shared/types/schedule";
 
-const ScheduleCard = lazy(() => import("./ScheduleCard"));
+const ConnectedScheduleCard = lazy(() => import("./ConnectedScheduleCard"));
 
 interface LazyScheduleCardProps {
   id: string;
@@ -37,7 +37,7 @@ const LazyScheduleCard: React.FC<LazyScheduleCardProps> = (props) => {
         />
       }
     >
-      <ScheduleCard {...props} />
+      <ConnectedScheduleCard {...props} />
     </Suspense>
   );
 };

@@ -2,7 +2,6 @@ import React, { useEffect, Suspense, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Schedule } from "../../../shared/types/schedule";
 import { getSchedule } from "../../schedule/api/scheduleQueries";
-import type { User } from "../../../types/user";
 import { getUserData } from "../api/usersQuery";
 import DashboardSkeleton from "../../../shared/components/DashboardSkeleton";
 import Title from "../../../shared/components/Title";
@@ -20,6 +19,8 @@ import Button from "../../../shared/components/Button";
 import ErrorBoundary from "../../../shared/components/ErrorBoundary";
 import ScheduleCardSkeleton from "../../schedule/components/ScheduleCardSkeleton";
 import LazyScheduleCard from "../../schedule/components/LazyScheduleCard";
+import type { User } from "../../../shared/types/user";
+import { useNavigate } from "react-router-dom";
 const Dashboard: React.FC = () => {
   const [activeSchedule, setActiveSchedule] = useState<Schedule | null>(null);
   const {
@@ -32,6 +33,7 @@ const Dashboard: React.FC = () => {
   });
 
   const userId = "ecd75215-960b-484b-a184-736f8fca4e59"; // Define the user ID
+  const navigate = useNavigate();
 
   const {
     data: userData,
@@ -178,7 +180,11 @@ const Dashboard: React.FC = () => {
             </div>
           </section>
 
-          <Button variant="white" className="mt-4">
+          <Button
+            variant="white"
+            className="mt-4"
+            onClick={() => navigate(`/schedule/${activeSchedule.ID}`)}
+          >
             <div className="text-sm sm:text-base flex items-center justify-center text-center">
               <img src={alarm} alt="alarm" className="h-5 w-5" />
               Clock-Out

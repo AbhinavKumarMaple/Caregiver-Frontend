@@ -35,6 +35,14 @@ interface ScheduleCardProps {
   email?: string;
   className?: string;
   asLink?: boolean;
+  // Action handlers
+  onCheckIn?: (id: string) => Promise<void>;
+  onCheckOut?: (id: string) => Promise<void>;
+  onCancel?: (id: string) => Promise<void>;
+  // Loading states
+  isCheckingIn?: boolean;
+  isCheckingOut?: boolean;
+  isCancelling?: boolean;
 }
 
 const ScheduleCard: React.FC<ScheduleCardProps> = ({
@@ -55,6 +63,14 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
   email,
   className = "",
   asLink = true,
+  // Action handlers
+  onCheckIn,
+  onCheckOut,
+  onCancel,
+  // Loading states
+  isCheckingIn = false,
+  isCheckingOut = false,
+  isCancelling = false,
 }) => {
   const getStatusColor = (status: string) => {
     const normalizedStatus = status.toLowerCase();
@@ -111,6 +127,16 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
       : variant === "centered"
       ? "rounded-2xl bg-[#2DA6FF0A]"
       : "rounded-2xl bg-white";
+
+  // Handle button click events
+  const handleButtonClick = (
+    e: React.MouseEvent,
+    action: () => Promise<void>
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    action();
+  };
 
   if (asLink) {
     return (
@@ -261,23 +287,69 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
         {variant === "card" && showActions && (
           <>
             {status === "Scheduled" || status === "upcoming" ? (
-              <Button>Clock-In Now</Button>
+              <Button
+                onClick={
+                  onCheckIn
+                    ? (e: React.MouseEvent<HTMLButtonElement>) =>
+                        handleButtonClick(e, () => onCheckIn(id))
+                    : undefined
+                }
+                disabled={isCheckingIn || !onCheckIn}
+              >
+                {isCheckingIn ? "Checking In..." : "Clock-In Now"}
+              </Button>
             ) : status === "In progress" || status === "in_progress" ? (
               <div className="flex space-x-2">
-                <Button variant="ghost" className="flex-1">
+                <Button
+                  variant="ghost"
+                  className="flex-1"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    // This button still navigates to the detail page
+                    // No need to prevent default
+                  }}
+                >
                   View Progress
                 </Button>
-                <Button className="flex-1">Clock-Out Now</Button>
+                <Button
+                  className="flex-1"
+                  onClick={
+                    onCheckOut
+                      ? (e: React.MouseEvent<HTMLButtonElement>) =>
+                          handleButtonClick(e, () => onCheckOut(id))
+                      : undefined
+                  }
+                  disabled={isCheckingOut || !onCheckOut}
+                >
+                  {isCheckingOut ? "Checking Out..." : "Clock-Out Now"}
+                </Button>
               </div>
             ) : status === "Completed" || status === "completed" ? (
               <Button variant="ghost">View Report</Button>
             ) : (
               <Button
-                variant="ghost"
-                disabled
-                className="border-red-600 text-red-600 disabled:border-red-400 disabled:text-red-400"
+                variant="redGhost"
+                onClick={
+                  onCancel
+                    ? (e) => handleButtonClick(e, () => onCancel(id))
+                    : undefined
+                }
+                disabled={
+                  isCancelling ||
+                  !onCancel ||
+                  status === "Cancelled" ||
+                  status === "missed"
+                }
+                className={
+                  status === "Cancelled" || status === "missed"
+                    ? "border-red-600 text-red-600 disabled:border-red-400 disabled:text-red-400 hover:!text-white"
+                    : ""
+                }
               >
-                Schedule Cancelled
+                {isCancelling
+                  ? "Cancelling..."
+                  : status === "Cancelled" || status === "missed"
+                  ? "Schedule Cancelled"
+                  : "Cancel Schedule"}
               </Button>
             )}
           </>
