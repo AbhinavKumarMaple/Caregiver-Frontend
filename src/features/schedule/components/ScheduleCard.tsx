@@ -296,7 +296,7 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
                   View Progress
                 </Button>
                 <Button
-                  className="flex-1"
+                  className="flex-1 "
                   onClick={onCheckOut ? () => onCheckOut(id) : undefined}
                   disabled={isCheckingOut || !onCheckOut}
                 >

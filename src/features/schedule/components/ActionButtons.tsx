@@ -40,7 +40,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           <button
             onClick={onCancelCheckin}
             disabled={isLoading}
-            className="sm:flex-1 border border-[red] hover:border-[red] !text-[#D32F2F] !font-medium py-4 rounded-button font-roboto font-normal  leading-button-text transition-colors disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed"
+            className="sm:flex-1 border border-[red] hover:border-[red] !text-[#D32F2F] !font-medium py-4 rounded-button font-roboto   leading-button-text transition-colors disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed"
           >
             {isLoading ? "Processing..." : "Cancel Check-In"}
           </button>
